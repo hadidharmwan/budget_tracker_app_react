@@ -1,3 +1,5 @@
+import { useReducer } from "react";
+
 const initialState = {
     budget: 2000,
     expenses: [
@@ -7,4 +9,20 @@ const initialState = {
     ],
 };
 
-export default AppContext = createContext();
+export const AppContext = createContext();
+
+export const AppProvider = (props) => {
+    const [state, dispatch] = useReducer(AppReducer, initialState);
+
+    return (
+        <AppContext.Provider
+            value={{
+                budget: state.budget,
+                expenses: state.expenses,
+                dispatch,
+            }}
+        >
+            {props.children}
+        </AppContext.Provider>
+    );
+};
